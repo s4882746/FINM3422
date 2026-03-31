@@ -1,0 +1,167 @@
+#include "lib/immolate.cl"
+long filter(instance* inst) {
+    bool invis = false;
+    bool suitablePack = false;
+    bool ankh = false;
+    int ecto = 0;
+    int specante = 2;
+    bool suitablePack3 = false;
+    bool suitablePack4 = false;
+    bool suitablePack5 = false;
+    bool suitablePack6 = false;
+    bool suitablePack7 = false;
+    bool suitablePack8 = false;
+    int specsize = 0;
+    int specsize3 = 0;
+    int specsize4 = 0;
+    int specsize5 = 0;
+    int specsize6 = 0;
+    int specsize7 = 0;
+    int specsize8 = 0;
+    bool glow = false;
+    bool blank = false;
+    bool antimatter = false;
+    
+    item jokers[2];
+    buffoon_pack(jokers, 2, inst, 1);
+    for (int i = 0; i < 2; i++) {
+        if (jokers[i] == Invisible_Joker) {
+            invis = true;
+        }
+    }
+    if (!invis)
+    return 0;
+
+        for (int i = 1; i <= 4; i++) {
+        pack pack1 = pack_info(next_pack(inst, 1));
+        if (pack1.type == Spectral_Pack) {
+        suitablePack = true;
+        specante = 1;
+        specsize = pack1.size;
+        }
+        if (suitablePack) break;
+    }
+        for (int i = 1; i <= 6; i++) {
+        pack pack2 = pack_info(next_pack(inst, 2));
+        if (suitablePack) break;
+        if (pack2.type == Spectral_Pack) {
+        specsize = pack2.size;
+        suitablePack = true;
+        }
+    }
+    if (!suitablePack) 
+    return 0;
+    item cards[4];
+    spectral_pack(cards, specsize, inst, specante);
+    for (int i = 0; i < specsize; i++) {
+        if (cards[i] == Ankh)
+        ankh = true;
+    }
+    if (!ankh)
+    return 0;
+
+        for (int i = 1; i <= 6; i++) {
+        pack pack3 = pack_info(next_pack(inst, 3));
+        if (pack3.type == Spectral_Pack) {
+        (suitablePack3 = true);
+        specsize3 = pack3.size;}
+        if (suitablePack3) break;
+    }
+        item cards3[4];
+    spectral_pack(cards3, specsize3, inst, 3);
+    for (int i = 0; i < specsize3; i++) {
+        if (cards3[i] == Ectoplasm)
+        ecto = ecto + 1;
+    }
+        for (int i = 1; i <= 6; i++) {
+        pack pack4 = pack_info(next_pack(inst, 4));
+        if (pack4.type == Spectral_Pack) {
+        (suitablePack4 = true);
+        specsize4 = pack4.size;}
+        if (suitablePack4) break;
+    }
+        item cards4[4];
+    spectral_pack(cards4, specsize4, inst, 4);
+    for (int i = 0; i < specsize4; i++) {
+        if (cards4[i] == Ectoplasm)
+        ecto = ecto + 1;
+    }
+
+        for (int i = 1; i <= 6; i++) {
+        pack pack5 = pack_info(next_pack(inst, 5));
+        if (pack5.type == Spectral_Pack) {
+        (suitablePack5 = true);
+        specsize5 = pack5.size;}
+        if (suitablePack5) break;
+    }
+        item cards5[4];
+    spectral_pack(cards5, specsize5, inst, 5);
+    for (int i = 0; i < specsize5; i++) {
+        if (cards5[i] == Ectoplasm)
+        ecto = ecto + 1;
+    }
+
+        for (int i = 1; i <= 6; i++) {
+        pack pack6 = pack_info(next_pack(inst, 6));
+        if (pack6.type == Spectral_Pack) {
+        (suitablePack6 = true);
+        specsize6 = pack6.size;}
+        if (suitablePack6) break;
+    }
+        item cards6[4];
+    spectral_pack(cards6, specsize6, inst, 6);
+    for (int i = 0; i < specsize6; i++) {
+        if (cards6[i] == Ectoplasm)
+        ecto = ecto + 1;
+    }
+
+        for (int i = 1; i <= 6; i++) {
+        pack pack7 = pack_info(next_pack(inst, 7));
+        if (pack7.type == Spectral_Pack) {
+        (suitablePack7 = true);
+        specsize7 = pack7.size;}
+        if (suitablePack7) break;
+    }
+        item cards7[4];
+    spectral_pack(cards7, specsize7, inst, 7);
+    for (int i = 0; i < specsize7; i++) {
+        if (cards7[i] == Ectoplasm)
+        ecto = ecto + 1;
+    }
+
+        for (int i = 1; i <= 6; i++) {
+        pack pack8 = pack_info(next_pack(inst, 8));
+        if (pack8.type == Spectral_Pack) {
+        (suitablePack8 = true);
+        specsize8 = pack8.size;}
+        if (suitablePack8) break;
+    }
+        item cards8[4];
+    spectral_pack(cards8, specsize8, inst, 8);
+    for (int i = 0; i < specsize8; i++) {
+        if (cards8[i] == Ectoplasm)
+        ecto = ecto + 1;
+    }
+    if (ecto < 2)
+    return 0;
+
+    for (int i = 0; i < 5; i++) {
+        init_locks(inst, 2 + i, false, false);
+    if (next_voucher(inst, 2 + i) == Blank) {
+        activate_voucher(inst, Blank);
+        blank = true;
+    }
+    }
+    if (!blank)
+    return 0;
+
+    for (int i = 0; i < 4; i++) {
+        init_locks(inst, 5 + i, false, false);
+    if (next_voucher(inst, 5 + i) == Antimatter) 
+    antimatter = true;
+    }
+    if (!antimatter)
+    return 0;
+    return (ecto - 1);
+
+}
